@@ -1,7 +1,7 @@
 #!/bin/sh -l
 
-echo "Hello $1"
+echo "Versioning Type: $1"
 
-time=$(date)
+version='v0.5.0'
 
-echo "time=$time" >> $GITHUB_OUTPUT
+echo "new_version=$version" >> $GITHUB_OUTPUT
