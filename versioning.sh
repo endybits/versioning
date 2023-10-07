@@ -13,7 +13,7 @@ if [[ $CURRENT_VERSION == '']]; then
     CURRENT_VERSION=$initial_version
     echo "new_version_tag=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 else
-    CURRENT_VERSION_SEGMENTS = (${CURRENT_VERSION//./ })
+    CURRENT_VERSION_SEGMENTS = $(${CURRENT_VERSION//./ })
     major_current_number = $CURRENT_VERSION_SEGMENTS[0]
     minor_current_number = $CURRENT_VERSION_SEGMENTS[1]
     patch_current_number = $CURRENT_VERSION_SEGMENTS[2]
