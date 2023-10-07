@@ -22,10 +22,9 @@ else
     NUMBERS_TAG=$(echo ${CURRENT_VERSION} | tr 'v' '\n')
     echo $NUMBERS_TAG
     # Destructure the tag for appy Semantic Versioning
-    CURRENT_VERSION_SEGMENTS=( $(echo $NUMBERS_TAG | awk -F '.' '{ print $1, $2, $3}') )
-    major_number=${CURRENT_VERSION_SEGMENTS[0]}
-    minor_number=${CURRENT_VERSION_SEGMENTS[1]}
-    patch_number=${CURRENT_VERSION_SEGMENTS[2]}
+    major_number=$(echo $NUMBERS_TAG | awk -F '.' '{ print $1 }')
+    minor_number=$(echo $NUMBERS_TAG | awk -F '.' '{ print $2 }')
+    patch_number=$(echo $NUMBERS_TAG | awk -F '.' '{ print $3 }')
     
     if [[ "$versioning_type" == 'patch' ]]
     then
