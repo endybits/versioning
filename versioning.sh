@@ -2,7 +2,7 @@
 
 versioning_type=$1
 echo "Versioning Type: $versioning_type"
-initial_version='v0.1.0'
+initial_version='0.1.0'
 
 git log --oneline
 
