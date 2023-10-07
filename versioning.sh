@@ -9,7 +9,8 @@ git log --oneline
 git fetch --prune --unshallow 2>/dev/null
 CURRENT_VERSION=`git describe --abbrev=0 --tags 2>/dev/null`
 echo 'CURRENT_VERSION $CURRENT_VERSION'
-if [[ $CURRENT_VERSION == '']]; then
+CURRENT_VERSION=$initial_version
+if [[ $CURRENT_VERSION != '']]; then
     CURRENT_VERSION=$initial_version
     echo "new_version_tag=$CURRENT_VERSION" >> $GITHUB_OUTPUT
 else
