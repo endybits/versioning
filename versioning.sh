@@ -41,5 +41,25 @@ else
     fi
     NEW_VERSION_TAG="$major_number.$minor_number.$patch_number"
     echo $NEW_VERSION_TAG
+
+    # Watch min 7:16
+    # https://www.youtube.com/watch?v=jwdG6D-AB1k&ab_channel=AntonPutra
+
+    # Get current hash  and verify if it already has a tag
+    GIT_COMMIT=`git rev-parse HEAD`
+    echo $GIT_COMMIT
+    NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
+
+    # Tag only if it doesn't already exist
+    if [[ -z "$NEEDS_TAG" ]]
+    then
+        echo "Tagging with $NEW_VERSION_TAG"
+        git tag $NEW_VERSION_TAG
+        git push --tags
+        git push
+    else
+        echo "A tag already exists on this commit"
+    fi
+
     echo "new_version_tag=$NEW_VERSION_TAG" >> $GITHUB_OUTPUT
 fi
