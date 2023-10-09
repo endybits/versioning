@@ -4,6 +4,8 @@ versioning_type=$1
 echo "Versioning Type: $versioning_type"
 initial_version='v0.1.0'
 
+git config --global --add safe.directory /github/workspace
+
 git log --oneline
 
 git fetch --prune --unshallow 2>/dev/null
@@ -42,20 +44,22 @@ else
     echo $NEW_VERSION_TAG
 fi
 
-    # Get current hash  and verify if it already has a tag
-    GIT_COMMIT=`git rev-parse HEAD`
-    echo $GIT_COMMIT
-    NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
+# Get current hash  and verify if it already has a tag
+GIT_COMMIT=`git rev-parse HEAD`
+echo $GIT_COMMIT
+NEEDS_TAG=`git describe --contains $GIT_COMMIT 2>/dev/null`
 
-    # Tag only if it doesn't already exist
-    if [[ -z "$NEEDS_TAG" ]]
-    then
-        echo "Tagging with $NEW_VERSION_TAG"
-        git tag $NEW_VERSION_TAG
-        git push --tags
-        git push
-    else
-        echo "A tag already exists on this commit"
-    fi
+# Tag only if it doesn't already exist
+if [[ -z "$NEEDS_TAG" ]]
+then
+    echo "Tagging with $NEW_VERSION_TAG"
+    git tag $NEW_VERSION_TAG
+    git push --tags
+    git push
+else
+    echo "A tag already exists on this commit"
+fi
 
-    echo "new_version_tag=$NEW_VERSION_TAG" >> $GITHUB_OUTPUT
+echo "new_version_tag=$NEW_VERSION_TAG" >> $GITHUB_OUTPUT
+
+exit 0
