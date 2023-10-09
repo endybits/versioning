@@ -8,15 +8,13 @@ git log --oneline
 
 git fetch --prune --unshallow 2>/dev/null
 CURRENT_VERSION=`git describe --abbrev=0 --tags 2>/dev/null`
-echo 'CURRENT_VERSION $CURRENT_VERSION'
-CURRENT_VERSION='v1.0.3'
+echo "CURRENT_VERSION $CURRENT_VERSION"
 
-echo $CURRENT_VERSION
 if [[ "$CURRENT_VERSION" == '' ]]
 then
     echo IN IF
-    CURRENT_VERSION=$initial_version
-    echo "new_version_tag=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+    NEW_VERSION_TAG=$initial_version
+    echo "First version tag: $NEW_VERSION_TAG"
 else
     # If exists, extract `v` example `v0.1.0` becomes in `0.1.0`
     NUMBERS_TAG=$(echo ${CURRENT_VERSION} | tr 'v' '\n')
@@ -39,11 +37,10 @@ else
         echo "No version type SEMVER"
         exit 1
     fi
+    
     NEW_VERSION_TAG="$major_number.$minor_number.$patch_number"
     echo $NEW_VERSION_TAG
-
-    # Watch min 7:16
-    # https://www.youtube.com/watch?v=jwdG6D-AB1k&ab_channel=AntonPutra
+fi
 
     # Get current hash  and verify if it already has a tag
     GIT_COMMIT=`git rev-parse HEAD`
@@ -62,4 +59,3 @@ else
     fi
 
     echo "new_version_tag=$NEW_VERSION_TAG" >> $GITHUB_OUTPUT
-fi
