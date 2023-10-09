@@ -1,5 +1,6 @@
 #!/bin/sh -l
-versioning_type='patch'
+set e
+
 versioning_type=$1
 echo "Versioning Type: $versioning_type"
 initial_version='v0.1.0'
